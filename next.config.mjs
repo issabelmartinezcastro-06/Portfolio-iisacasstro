@@ -24,6 +24,12 @@ const nextConfig = {
       },
     },
   },
+  async redirects() {
+    return [
+      { source: "/", destination: "/es", permanent: false },
+      { source: "/modulos/:slug", destination: "/es/modulos/:slug", permanent: false },
+    ];
+  },
   async headers() {
     return [{ source: "/(.*)", headers: securityHeaders }];
   },
