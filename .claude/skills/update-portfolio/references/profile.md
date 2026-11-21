@@ -1,6 +1,6 @@
 # Profile of this repo
 
-Everything here is specific to one portfolio. Keep this file current: when the structure changes, change it here. Items marked `ASK` could not be discovered from the repo and must be asked of the owner on the first real pass; replace the marker with the answer.
+Everything here is specific to one portfolio. Keep this file current: when the structure changes, change it here. Items marked `ASK` could not be discovered from the repo and must be asked of the owner when a real project is added; replace the marker with the answer.
 
 ## Owner and site
 
@@ -72,8 +72,8 @@ Everything here is specific to one portfolio. Keep this file current: when the s
 
 ## Privacy specifics
 
-- Client work under NDA: ASK
-- Projects that hold other people's data: ASK
+- Client work under NDA: none
+- Projects that hold other people's data: none so far; if one appears, use fictional data and ask
 - Anything else the owner never wants public: personal email and the retired account name. Never publish `isabelmartinezcastro06@gmail.com`; commits use the GitHub noreply address
 - Only public information goes on pages; `.env*` and `.vercel/` are git-ignored and must not be read or shown
 
