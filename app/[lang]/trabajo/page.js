@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import { getDictionary, isLocale, pageMetadata } from "@/lib/i18n";
 import { getProject } from "@/lib/projects";
 import WorkList from "@/components/work-list";
-import { DisplayTitle, Star } from "@/components/scrapbook";
+import PageHero from "@/components/page-hero";
 
 export async function generateMetadata({ params }) {
   const { lang } = await params;
@@ -25,13 +25,9 @@ export default async function WorkPage({ params }) {
   );
 
   return (
-    <section className="relative mx-auto max-w-6xl px-6 pb-24 pt-16 md:pt-24">
-      <Star className="absolute right-6 top-10 size-16 md:right-10 md:size-24" color="var(--color-pink)" />
-      <DisplayTitle
-        text={t.work.title}
-        className="font-display text-6xl leading-none text-royal md:text-9xl"
-      />
+    <>
+      <PageHero title={t.work.title} bg="bg-mint/70" star="var(--color-yellow)" sparkle="var(--color-pink)" />
       <WorkList items={items} linkLabel={t.work.view} />
-    </section>
+    </>
   );
 }

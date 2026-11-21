@@ -1,14 +1,9 @@
 import { notFound } from "next/navigation";
 import { getDictionary, isLocale, pageMetadata } from "@/lib/i18n";
-import {
-  Arrow,
-  DisplayTitle,
-  FadeUp,
-  ScrollText,
-  SectionTitle,
-  Sparkle,
-  Star,
-} from "@/components/scrapbook";
+import { Arrow, FadeUp, ScrollText, SectionTitle, Sparkle } from "@/components/scrapbook";
+import PageHero from "@/components/page-hero";
+
+const bands = ["bg-mint/50", "bg-pink/40"];
 
 export async function generateMetadata({ params }) {
   const { lang } = await params;
@@ -24,40 +19,31 @@ export default async function StudioPage({ params }) {
 
   return (
     <>
-      <section className="relative mx-auto max-w-5xl px-6 pb-12 pt-16 md:pt-24">
-        <Star className="absolute right-6 top-10 size-16 md:right-10 md:size-24" color="var(--color-mint)" />
-        <DisplayTitle
-          text={s.title}
-          className="font-display text-6xl leading-none text-royal md:text-9xl"
-        />
+      <PageHero title={s.title} bg="bg-yellow/70" star="var(--color-pink)" sparkle="var(--color-sky)" />
+
+      <section className="bg-royal px-6 py-24 text-white">
+        <div className="mx-auto max-w-4xl">
+          <ScrollText text={s.statement} className="text-3xl font-bold leading-snug md:text-5xl" />
+        </div>
       </section>
 
-      <section className="mx-auto max-w-4xl px-6 py-16">
-        <ScrollText
-          text={s.statement}
-          className="text-3xl font-bold leading-snug text-ink md:text-5xl"
-        />
-      </section>
-
-      <section className="relative mx-auto max-w-5xl px-6 py-24">
+      <section className="relative pt-24">
         <Sparkle className="absolute right-8 top-20 size-10" color="var(--color-yellow)" />
-        <SectionTitle>{s.ongoingTitle}</SectionTitle>
-        <ul className="mt-16 divide-y-2 divide-dashed divide-ink/20">
+        <div className="mx-auto max-w-5xl px-6">
+          <SectionTitle>{s.ongoingTitle}</SectionTitle>
+        </div>
+        <ul className="mt-16">
           {s.ongoing.map((project, i) => (
-            <li key={project.title}>
-              <FadeUp className="relative py-10">
-                <h3
-                  className={`font-display text-3xl leading-tight md:text-5xl ${
-                    i % 2 === 0 ? "text-pink" : "text-royal"
-                  }`}
-                >
+            <li key={project.title} className={bands[i % bands.length]}>
+              <FadeUp className="relative mx-auto max-w-5xl px-6 py-14">
+                <h3 className="font-display text-3xl leading-tight text-ink md:text-5xl">
                   {project.title}
                 </h3>
-                <p className="mt-4 text-lg font-medium text-ink/75">{project.intro}</p>
+                <p className="mt-4 text-lg font-medium text-ink/80">{project.intro}</p>
                 <ul className="mt-4 grid gap-2 text-lg text-ink">
                   {project.items.map((item) => (
                     <li key={item} className="flex items-center gap-3">
-                      <span aria-hidden="true" className="text-pink">
+                      <span aria-hidden="true" className="text-royal">
                         ✦
                       </span>
                       {item}
@@ -65,7 +51,7 @@ export default async function StudioPage({ params }) {
                   ))}
                 </ul>
                 {i === 0 && (
-                  <Arrow className="absolute right-0 top-10 hidden w-24 rotate-12 md:block" />
+                  <Arrow className="absolute right-6 top-12 hidden w-24 rotate-12 md:block" />
                 )}
               </FadeUp>
             </li>

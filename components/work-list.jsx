@@ -5,27 +5,29 @@ import { motion, useReducedMotion } from "motion/react";
 import { ArrowUpRight } from "lucide-react";
 import { CountUp, Polaroid, Star } from "@/components/scrapbook";
 
+// Una banda de color por trabajo, de lado a lado de la pantalla.
+const bands = ["bg-pink/30", "bg-sky/40", "bg-yellow/40", "bg-mint/40", "bg-violet/30"];
 const stickers = [
   "var(--color-yellow)",
-  "var(--color-mint)",
+  "var(--color-pink)",
   "var(--color-violet)",
   "var(--color-sky)",
-  "var(--color-pink)",
+  "var(--color-mint)",
 ];
 
 // Lista de trabajo: número grande, título en letras gordas, métodos y una imagen o cifra.
 export default function WorkList({ items, linkLabel }) {
   const reduce = useReducedMotion();
   return (
-    <ol className="mt-16 divide-y-2 divide-dashed divide-ink/20">
+    <ol>
       {items.map((item, i) => {
         const rotate = i % 2 === 0 ? 3 : -3;
         const rowClass =
-          "group grid items-center gap-8 py-12 md:grid-cols-[5rem_1fr_20rem] md:gap-10";
+          "group grid items-center gap-8 py-14 md:grid-cols-[5rem_1fr_20rem] md:gap-10";
 
         const inner = (
           <>
-            <span className="font-display text-6xl text-pink md:text-7xl">
+            <span className="text-sticker font-display text-6xl text-white md:text-7xl">
               {String(i + 1).padStart(2, "0")}
             </span>
 
@@ -37,14 +39,14 @@ export default function WorkList({ items, linkLabel }) {
               >
                 {item.title}
               </h3>
-              <p className="mt-3 max-w-xl text-lg text-ink/75">{item.summary}</p>
+              <p className="mt-3 max-w-xl text-lg text-ink/80">{item.summary}</p>
               <dl className="mt-6 grid max-w-xl gap-4">
                 {item.points.map((point) => (
                   <div key={point.label}>
                     <dt className="text-xs font-extrabold uppercase tracking-widest text-royal">
                       {point.label}
                     </dt>
-                    <dd className="mt-1 text-ink/80">{point.text}</dd>
+                    <dd className="mt-1 text-ink/85">{point.text}</dd>
                   </div>
                 ))}
               </dl>
@@ -70,10 +72,10 @@ export default function WorkList({ items, linkLabel }) {
                 />
               ) : item.metric ? (
                 <div className="text-center" style={{ rotate: `${rotate}deg` }}>
-                  <p className="font-display text-6xl text-royal md:text-7xl">
+                  <p className="text-sticker font-display text-6xl text-white md:text-8xl">
                     <CountUp to={item.metric.value} separator={item.metric.separator} />
                   </p>
-                  <p className="mt-2 text-sm font-bold text-ink/70">{item.metric.label}</p>
+                  <p className="mt-2 text-sm font-bold text-ink/75">{item.metric.label}</p>
                 </div>
               ) : (
                 <Star className="mx-auto size-24 md:size-32" color={stickers[i % stickers.length]} />
@@ -83,8 +85,9 @@ export default function WorkList({ items, linkLabel }) {
         );
 
         return (
-          <li key={item.title}>
+          <li key={item.title} className={bands[i % bands.length]}>
             <motion.div
+              className="mx-auto max-w-6xl px-6"
               initial={reduce ? false : { opacity: 0, x: i % 2 === 0 ? -40 : 40 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-80px" }}
