@@ -4,7 +4,14 @@ import { projects } from "@/lib/projects";
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
 export default function sitemap() {
-  const pages = ["", ...projects.map((p) => `/modulos/${p.slug}`)];
+  const pages = [
+    "",
+    "/trabajo",
+    "/sobre-mi",
+    "/estudio",
+    "/contacto",
+    ...projects.map((p) => `/modulos/${p.slug}`),
+  ];
   return locales.flatMap((lang) =>
     pages.map((path) => ({
       url: `${baseUrl}/${lang}${path}`,

@@ -8,7 +8,7 @@ import { DisplayTitle, Phone, Polaroid, Sparkle, Star } from "@/components/scrap
 
 gsap.registerPlugin(useGSAP);
 
-export default function Hero({ eyebrow, title, subtitle, cta, shots }) {
+export default function Hero({ eyebrow, title, subtitle, scroll, shots }) {
   const root = useRef(null);
 
   useGSAP(
@@ -51,12 +51,9 @@ export default function Hero({ eyebrow, title, subtitle, cta, shots }) {
             className="text-sticker font-display text-[3.4rem] leading-[0.98] text-white sm:text-7xl md:text-[5.6rem]"
           />
           <p className="hero-fade mt-8 max-w-md text-lg font-medium text-ink/80">{subtitle}</p>
-          <a
-            href="#proyectos"
-            className="hero-fade mt-9 inline-flex rotate-1 items-center gap-2 rounded-full bg-ink px-7 py-3.5 font-extrabold text-background shadow-lg shadow-ink/30 transition-transform hover:-translate-y-1 hover:-rotate-2"
-          >
-            {cta} <ArrowDown className="size-4" aria-hidden="true" />
-          </a>
+          <p className="hero-fade mt-10 inline-flex items-center gap-2 text-sm font-extrabold uppercase tracking-widest text-ink/70">
+            {scroll} <ArrowDown className="size-4 animate-bounce" aria-hidden="true" />
+          </p>
         </div>
 
         <div className="relative mx-auto h-[26rem] w-full max-w-md sm:h-[30rem] md:h-[34rem] md:max-w-none">

@@ -43,7 +43,7 @@ export default async function ProjectPage({ params }) {
   return (
     <article className="mx-auto max-w-3xl px-6 py-12">
       <Link
-        href={`/${lang}#proyectos`}
+        href={`/${lang}/trabajo`}
         className="inline-flex items-center gap-2 font-semibold hover:underline"
       >
         <ArrowLeft className="size-4" aria-hidden="true" /> {t.projects.back}

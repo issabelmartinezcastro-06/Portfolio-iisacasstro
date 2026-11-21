@@ -69,7 +69,7 @@ export default function CaseStudy({ lang, project, content, backLabel, stackLabe
         <Sparkle className="absolute bottom-10 left-[40%] size-10" color="var(--color-background)" />
         <div className="relative mx-auto max-w-6xl">
           <Link
-            href={`/${lang}#proyectos`}
+            href={`/${lang}/trabajo`}
             className="inline-flex items-center gap-2 font-bold hover:underline"
           >
             <ArrowLeft className="size-4" aria-hidden="true" /> {backLabel}

@@ -34,7 +34,8 @@ Everything here is specific to one portfolio. Keep this file current: when the s
 | Other-language card text | same entry in `lib/projects.js`, keys `es` and `en` |
 | UI strings (both languages) | `lib/i18n.js` (`getDictionary(lang)`) |
 | Counters / stats section | none |
-| Navbar / header | `components/header.jsx` (+ `language-switcher.jsx`) |
+| Pages (all copy in `lib/i18n.js`) | `app/[lang]/page.js` (home), `trabajo`, `sobre-mi`, `estudio`, `contacto`; case studies stay under `modulos/[slug]`. Work list rows (non-STL) live in `lib/i18n.js` under `work.items`, rendered by `components/work-list.jsx` |
+| Navbar / header | `components/header.jsx` + `nav-links.jsx` (+ `language-switcher.jsx`); page transition in `app/[lang]/template.js` |
 | Sitemap / robots / security headers | `app/sitemap.js`, `app/robots.js`, `next.config.mjs` |
 | Blog posts, resume, skills sections (optional follow-ups) | none exist |
 
@@ -81,7 +82,8 @@ Everything here is specific to one portfolio. Keep this file current: when the s
 
 - Client work under NDA: none
 - Projects that hold other people's data: none so far; if one appears, use fictional data and ask
-- Anything else the owner never wants public: personal email and the retired account name. Never publish `isabelmartinezcastro06@gmail.com`; commits use the GitHub noreply address
+- Public contact (owner decision, 2026-11-21): the contact page shows `isabelmartinezcastro06@gmail.com` and her LinkedIn, kept in `lib/site.js`. Still never use that email for commits (they use the GitHub noreply address) and never publish the retired account name
+- Never say who a piece of work was done for (no client names or identifying details); describe only methods and tools. STL is the one named exception. Do not list invoices, delivery notes, suppliers or stock as services, and do not mention family
 - Only public information goes on pages; `.env*` and `.vercel/` are git-ignored and must not be read or shown
 
 ## Project sources

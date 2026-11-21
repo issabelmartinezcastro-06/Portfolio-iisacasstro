@@ -48,7 +48,7 @@ export default async function LangLayout({ children, params }) {
       className={`${bricolage.variable} ${bagel.variable} ${geistMono.variable} antialiased`}
     >
       <body className="min-h-dvh flex flex-col">
-        <Header lang={lang} label={t.nav.projects} />
+        <Header lang={lang} nav={t.nav} />
         <main className="flex-1 overflow-x-clip">{children}</main>
         <footer className="px-6 py-10 text-center text-sm text-ink/60">
           {t.footer}

@@ -186,8 +186,13 @@ export function FadeUp({ children, delay = 0, className = "" }) {
   );
 }
 
+function formatNumber(n, separator) {
+  const text = String(Math.round(n));
+  return separator ? text.replace(/\B(?=(\d{3})+(?!\d))/g, separator) : text;
+}
+
 // Número que cuenta hasta su valor al entrar en pantalla.
-export function CountUp({ to, className = "" }) {
+export function CountUp({ to, separator = "", className = "" }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true });
   const reduce = useReducedMotion();
@@ -195,22 +200,53 @@ export function CountUp({ to, className = "" }) {
     const el = ref.current;
     if (!inView || !el) return;
     if (reduce) {
-      el.textContent = to;
+      el.textContent = formatNumber(to, separator);
       return;
     }
     const controls = animate(0, to, {
       duration: 1.6,
       ease: "easeOut",
       onUpdate: (v) => {
-        el.textContent = Math.round(v);
+        el.textContent = formatNumber(v, separator);
       },
     });
     return () => controls.stop();
-  }, [inView, to, reduce]);
+  }, [inView, to, reduce, separator]);
   return (
     <span ref={ref} className={className}>
-      {reduce ? to : 0}
+      {formatNumber(reduce ? to : 0, separator)}
     </span>
+  );
+}
+
+function ScrollWord({ children, progress, range, reduce }) {
+  const opacity = useTransform(progress, range, [0.15, 1]);
+  return (
+    <motion.span style={{ opacity: reduce ? 1 : opacity }} className="mr-[0.25em] inline-block">
+      {children}
+    </motion.span>
+  );
+}
+
+// Párrafo cuyas palabras se van llenando de color según lo lees al hacer scroll.
+export function ScrollText({ text, className = "" }) {
+  const ref = useRef(null);
+  const reduce = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 0.85", "end 0.45"] });
+  const words = text.split(" ");
+  return (
+    <p ref={ref} className={className}>
+      {words.map((word, i) => (
+        <ScrollWord
+          key={i}
+          progress={scrollYProgress}
+          range={[i / words.length, (i + 1) / words.length]}
+          reduce={reduce}
+        >
+          {word}
+        </ScrollWord>
+      ))}
+    </p>
   );
 }
 
