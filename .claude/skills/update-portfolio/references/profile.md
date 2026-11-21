@@ -55,7 +55,7 @@ Everything here is specific to one portfolio. Keep this file current: when the s
 - Categories and what each means: none
 - Label vocabulary (uppercase tags on cards): none
 - Thumbnail: none. Cards are solid colour blocks (`colorClasses` in `lib/projects.js`; a new colour needs a `--color-*` in `app/globals.css` and a full class name in that map so Tailwind sees it). If thumbnails are added: ratio 16:9, WebP, under `public/proyectos/<slug>/`
-- Does the entry order define the grid order? Yes, array order in `lib/projects.js`. Ask where a new project goes
+- Does the entry order define the grid order? Yes, array order in `lib/projects.js`. Ask where a new project goes (STL was placed first, by the owner)
 - Detail pages today only show title, summary, one `description` paragraph and the stack. Case studies in the style of `page-style.md` need the shared components first (see below)
 
 ## Voice
@@ -64,6 +64,13 @@ Everything here is specific to one portfolio. Keep this file current: when the s
 - Person: always first person ("diseñé", "decidí", "aprendí"). This overrides the skill's default of impersonal text in `page-style.md`
 - Banned things: em dashes (use commas, full stops or parentheses) and hype adjectives (only what can be checked). Emojis are not banned, but keep them out of case-study text unless asked
 - How the owner credits teammates and clients: depends on the project, ask each time (name and what each person did, or just "team of N")
+
+## Visual style (owner's reference, 2026-11-21)
+
+- The owner sent a "marketing portfolio template" as reference: scrapbook collage, chunky rounded display type, pastel background, pink star stickers, polaroids with tape, hand-drawn arrows, overlapping and slightly rotated elements, a lot of motion. The owner dislikes pages made of boxes or cards ("abusing cards") and static layouts
+- Implemented in `components/scrapbook.jsx` (`Polaroid`, `Phone`, `Star`, `Sparkle`, `Arrow`, `Marquee`, `CountUp`, `Parallax`, `FadeUp`, `DisplayTitle`, `SectionTitle`, `ScrollProgress`) and `components/case-study.jsx`. Display font Bagel Fat One (`font-display`), colour `royal` for headings, `text-sticker` for outlined hero titles
+- New pages must reuse these pieces: big type, dashed dividers, rotated photos, scroll-driven motion. No cards, no boxed tiles. Respect `prefers-reduced-motion`
+- Next dev quirk: after adding new Tailwind classes in new files, restart `npm run dev` or the utilities are not generated. Do not run `next build` while `next dev` is running
 
 ## Diagram style
 
@@ -81,7 +88,8 @@ Everything here is specific to one portfolio. Keep this file current: when the s
 
 | Project | Repo | Visibility | Live URL | Local folder | Notes |
 | --- | --- | --- | --- | --- | --- |
-| Proyecto uno / dos / tres | none | n/a | n/a | n/a | Fictional placeholders from the first build; replace with real projects, ASK for each repo, visibility and local folder |
+| STL (Fundación Seminario Teológico Libre) | Do NOT link it from the portfolio (owner decision, 2026-11-21). Exists at https://gitlab.com/iisacasstro/stl (old account) and https://github.com/issabelmartinezcastro-06/stl, both public | public | https://seminarioteologicolibre.org/ | `C:\Users\isabe\Desktop\Proyectos\STL` | Built solo as work for the foundation. Owner wants the page to stress user experience, components and animations. Owner approved showing the public site as is, including real student names, photos and teacher videos. Never read `STL/.env.local`. Git there needs `git -c safe.directory=<path>` |
+| Proyecto uno / dos / tres | none | n/a | n/a | n/a | Fictional placeholders from the first build; replace as real projects arrive (ASK for each repo, visibility and local folder) |
 
 ## Environment quirks
 

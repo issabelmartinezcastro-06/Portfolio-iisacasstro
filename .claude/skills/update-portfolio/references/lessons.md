@@ -43,3 +43,11 @@ Distilled from a real portfolio's history. Each one cost a correction. Add yours
 - Local folder names can differ from repo names. Record the mapping in `profile.md`.
 - A matcher, regex or config edited through a shell can lose escapes; re-read the file after writing it.
 - Keep this skill short at the top and detailed in `references/`; append to `history.md` at the end of every pass.
+
+## Added after the STL pass
+
+- The owner may point to a repo on a retired account. Check whether a copy exists under the current account and say so, but use the link the owner chooses.
+- Pop-ups that close on scroll must be captured with no `scrollY` after the click; use a taller viewport instead.
+- Full-page captures cropped to one ratio (1440x640) make a clean carousel; check each crop for half-cut people or text before converting.
+- Bilingual diagrams need one render per language; keep a file name pattern (`diagram-<name>-es.png`, `-en.png`).
+- Python heredocs through the shell break on Windows paths and on long text with quotes; write the file with the Write tool instead.

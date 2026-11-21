@@ -1,4 +1,4 @@
-import { Bricolage_Grotesque, Geist_Mono } from "next/font/google";
+import { Bagel_Fat_One, Bricolage_Grotesque, Geist_Mono } from "next/font/google";
 import { notFound } from "next/navigation";
 import "../globals.css";
 import { getDictionary, isLocale, locales } from "@/lib/i18n";
@@ -7,6 +7,12 @@ import Header from "@/components/header";
 const bricolage = Bricolage_Grotesque({
   variable: "--font-bricolage",
   subsets: ["latin"],
+});
+
+const bagel = Bagel_Fat_One({
+  variable: "--font-bagel",
+  subsets: ["latin"],
+  weight: "400",
 });
 
 const geistMono = Geist_Mono({
@@ -39,11 +45,11 @@ export default async function LangLayout({ children, params }) {
   return (
     <html
       lang={lang}
-      className={`${bricolage.variable} ${geistMono.variable} antialiased`}
+      className={`${bricolage.variable} ${bagel.variable} ${geistMono.variable} antialiased`}
     >
       <body className="min-h-dvh flex flex-col">
         <Header lang={lang} label={t.nav.projects} />
-        <main className="flex-1">{children}</main>
+        <main className="flex-1 overflow-x-clip">{children}</main>
         <footer className="px-6 py-10 text-center text-sm text-ink/60">
           {t.footer}
         </footer>

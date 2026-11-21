@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { getDictionary, isLocale, locales } from "@/lib/i18n";
 import { colorClasses, getProject, projects } from "@/lib/projects";
+import CaseStudy from "@/components/case-study";
 
 export function generateStaticParams() {
   return locales.flatMap((lang) =>
@@ -27,6 +28,18 @@ export default async function ProjectPage({ params }) {
   const t = getDictionary(lang);
   const content = project[lang];
 
+  if (content.study) {
+    return (
+      <CaseStudy
+        lang={lang}
+        project={project}
+        content={content}
+        backLabel={t.projects.back}
+        stackLabel={t.projects.stack}
+      />
+    );
+  }
+
   return (
     <article className="mx-auto max-w-3xl px-6 py-12">
       <Link
@@ -36,9 +49,7 @@ export default async function ProjectPage({ params }) {
         <ArrowLeft className="size-4" aria-hidden="true" /> {t.projects.back}
       </Link>
       <div className={`mt-8 rounded-3xl p-8 md:p-12 ${colorClasses[project.color]}`}>
-        <h1 className="text-4xl font-extrabold tracking-tight md:text-6xl">
-          {content.title}
-        </h1>
+        <h1 className="font-display text-4xl md:text-6xl">{content.title}</h1>
         <p className="mt-4 text-lg text-ink/80">{content.summary}</p>
       </div>
       <p className="mt-10 text-lg leading-relaxed">{content.description}</p>

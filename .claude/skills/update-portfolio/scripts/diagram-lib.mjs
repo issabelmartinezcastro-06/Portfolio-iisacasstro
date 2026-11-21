@@ -7,17 +7,26 @@ import { dirname } from "node:path";
 import { CHROME } from "./chrome.mjs";
 
 export const THEME = {
-  bg: "#faf9f5",
-  accent: "#d9694a",        // kicker, accent cards, pills of the card that matters
-  accentSoft: "#fffcfa",    // background of accent cards
-  accentBorder: "#f3dccf",
-  accentText: "#b5492b",
-  ink: "#1f1e1b",
-  muted: "#6b6a65",
-  line: "#efede6",
-  serif: "'Source Serif 4',Georgia,serif",
-  sans: "Inter,system-ui,sans-serif",
-  fontImport: "@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Source+Serif+4:wght@400;500&display=swap');",
+  bg: "#fbf7ee",
+  accent: "#e8508a",        // kicker and the card that matters most
+  accentSoft: "#fff5f8",    // background of accent cards
+  accentBorder: "#f6cadb",
+  accentText: "#b8326a",
+  ink: "#1f1b2d",
+  muted: "#6b6677",
+  line: "#eee8dc",
+  serif: "'Bricolage Grotesque',system-ui,sans-serif",
+  sans: "'Bricolage Grotesque',system-ui,sans-serif",
+  fontImport: "@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&display=swap');",
+  // The site's colour palette: use one tint per card or group (card({ tint: "violet" })).
+  palette: {
+    pink: { bg: "#fde4ec", border: "#f7b9cd", dot: "#f58aa9" },
+    yellow: { bg: "#fdf4c4", border: "#f1de78", dot: "#eac92a" },
+    violet: { bg: "#ece4fb", border: "#cdbcf3", dot: "#a98cec" },
+    mint: { bg: "#dcf6ea", border: "#a9e6c8", dot: "#5fd09e" },
+    orange: { bg: "#fde8d3", border: "#f5c797", dot: "#f09a46" },
+    sky: { bg: "#dff1fb", border: "#b2dbf2", dot: "#69b8e4" },
+  },
 };
 const T = THEME;
 
@@ -52,8 +61,12 @@ code{font-family:ui-monospace,Consolas,monospace;font-size:.92em}
 
 export const arrowSvg = `<svg viewBox="0 0 60 24" fill="none" stroke="#c9c4b5" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h54M46 3l10 9-10 9"/></svg>`;
 
-export const card = ({ eb, t, d, accent, dot, pills }) =>
-  `<div class="card${accent ? " accent" : ""}">${eb ? `<div class="eb">${eb}</div>` : ""}<div class="t">${dot ? `<span class="dot" style="background:${dot}"></span>` : ""}${t}</div>${d ? `<div class="d">${d}</div>` : ""}${pills ? `<div class="pills">${pills.map((p) => `<span class="pill">${p}</span>`).join("")}</div>` : ""}</div>`;
+export const card = ({ eb, t, d, accent, dot, pills, tint }) => {
+  const c = tint && T.palette[tint];
+  const style = c ? ` style="background:${c.bg};border-color:${c.border}"` : "";
+  const dotColor = dot ?? (c && c.dot);
+  return `<div class="card${accent ? " accent" : ""}"${style}>${eb ? `<div class="eb">${eb}</div>` : ""}<div class="t">${dotColor ? `<span class="dot" style="background:${dotColor}"></span>` : ""}${t}</div>${d ? `<div class="d">${d}</div>` : ""}${pills ? `<div class="pills">${pills.map((p) => `<span class="pill">${p}</span>`).join("")}</div>` : ""}</div>`;
+};
 
 export const row = (cards, { arrows = true } = {}) =>
   `<div class="row">${cards.map((c, i) => (i ? (arrows ? `<div class="arrow">${arrowSvg}</div>` : `<div style="width:26px"></div>`) : "") + card(c)).join("")}</div>`;
