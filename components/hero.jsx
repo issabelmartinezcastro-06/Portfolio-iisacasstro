@@ -4,7 +4,7 @@ import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ArrowDown } from "lucide-react";
-import { DisplayTitle, Phone, Polaroid, Sparkle, Star } from "@/components/scrapbook";
+import { DisplayTitle, Phone, Polaroid, Sparkle, Star, Sticker } from "@/components/scrapbook";
 
 gsap.registerPlugin(useGSAP);
 
@@ -51,9 +51,12 @@ export default function Hero({ eyebrow, title, subtitle, scroll, shots }) {
             className="text-sticker font-display text-[3.4rem] leading-[0.98] text-white sm:text-7xl md:text-[5.6rem]"
           />
           <p className="hero-fade mt-8 max-w-md text-lg font-medium text-ink/80">{subtitle}</p>
-          <p className="hero-fade mt-10 inline-flex items-center gap-2 text-sm font-extrabold uppercase tracking-widest text-ink/70">
-            {scroll} <ArrowDown className="size-4 animate-bounce" aria-hidden="true" />
-          </p>
+          <div className="hero-fade mt-8 flex items-end gap-6">
+            <Sticker name="saludar" rotate={-3} delay={0.8} className="w-24 sm:w-28" />
+            <p className="inline-flex items-center gap-2 pb-4 text-sm font-extrabold uppercase tracking-widest text-ink/70">
+              {scroll} <ArrowDown className="size-4 animate-bounce" aria-hidden="true" />
+            </p>
+          </div>
         </div>
 
         <div className="relative mx-auto h-[26rem] w-full max-w-md sm:h-[30rem] md:h-[34rem] md:max-w-none">

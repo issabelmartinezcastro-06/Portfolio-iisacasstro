@@ -11,6 +11,7 @@ import {
   SectionTitle,
   Sparkle,
   Star,
+  Sticker,
 } from "@/components/scrapbook";
 
 const STL = "/proyectos/stl";
@@ -39,10 +40,15 @@ export default async function HomePage({ params }) {
       />
 
       <section className="relative overflow-hidden bg-sky/30">
-        <div className="relative mx-auto max-w-6xl px-6 py-28">
+        <div className="relative mx-auto max-w-6xl px-6 pb-56 pt-28 sm:pb-60 md:pb-28">
           <Star className="absolute right-6 top-10 size-16 md:right-16 md:size-24" color="var(--color-pink)" />
           <Heart className="absolute bottom-12 right-1/3 hidden size-10 md:block" color="#ffffff" />
           <Sparkle className="absolute bottom-10 left-6 size-10" color="#ffffff" />
+          <Sticker
+            name="laptop"
+            rotate={-2}
+            className="absolute bottom-6 right-4 w-36 sm:w-44 md:bottom-10 md:right-10 md:w-64"
+          />
           {t.home.roles.map((role, i) => (
             <FadeUp key={role} delay={i * 0.12}>
               <p

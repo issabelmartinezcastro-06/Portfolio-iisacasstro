@@ -15,6 +15,7 @@ import {
   SectionTitle,
   Sparkle,
   Star,
+  Sticker,
 } from "@/components/scrapbook";
 import { colorClasses } from "@/lib/projects";
 
@@ -166,7 +167,8 @@ export default function CaseStudy({ lang, project, content, backLabel, stackLabe
       </section>
 
       {/* Lo que más cuidé */}
-      <section className="mx-auto max-w-6xl px-6 pb-16">
+      <section className="relative mx-auto max-w-6xl px-6 pb-16">
+        <Sticker name="lupa" rotate={6} className="absolute right-6 top-0 hidden w-24 md:block md:w-28" />
         <SectionTitle>{study.labels.highlights}</SectionTitle>
         <div className="mt-6 divide-y-2 divide-dashed divide-ink/15">
           {study.highlights.map((item, i) => (

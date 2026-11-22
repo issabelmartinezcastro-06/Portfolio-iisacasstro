@@ -34,7 +34,7 @@ export default async function WorkPage({ params }) {
 
   return (
     <>
-      <PageHero title={t.work.title} bg="bg-pink/55" star="var(--color-sky)" sparkle="#ffffff" />
+      <PageHero title={t.work.title} bg="bg-pink/55" star="var(--color-sky)" sparkle="#ffffff" sticker="carpetas" />
       <WorkList items={items} filters={t.work.filters} />
     </>
   );

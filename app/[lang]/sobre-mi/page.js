@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { getDictionary, isLocale, pageMetadata } from "@/lib/i18n";
-import { FadeUp, ScrollText, SectionTitle, Sparkle } from "@/components/scrapbook";
+import { FadeUp, ScrollText, SectionTitle, Sparkle, Sticker } from "@/components/scrapbook";
 import PageHero from "@/components/page-hero";
 
 // Colores del barrido que aparece al pasar el ratón por cada función.
@@ -20,7 +20,7 @@ export default async function AboutPage({ params }) {
 
   return (
     <>
-      <PageHero title={a.title} bg="bg-sky/65" star="var(--color-pink)" sparkle="#ffffff">
+      <PageHero title={a.title} bg="bg-sky/65" star="var(--color-pink)" sparkle="#ffffff" sticker="retrato">
         <div className="mt-12 space-y-8">
           {a.roles.map((role, i) => (
             <FadeUp key={role.name} delay={0.5 + i * 0.12}>
@@ -31,7 +31,8 @@ export default async function AboutPage({ params }) {
         </div>
       </PageHero>
 
-      <section className="bg-pink/25 px-6 py-24">
+      <section className="relative bg-pink/25 px-6 py-24">
+        <Sticker name="pensar" rotate={4} className="absolute bottom-6 right-4 w-16 sm:w-24 md:right-[6%] md:w-32" />
         <div className="mx-auto max-w-4xl space-y-14">
           {a.bio.map((paragraph) => (
             <ScrollText

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import Image from "next/image";
+import { avatarSizes } from "@/lib/avatars";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import {
@@ -409,5 +410,42 @@ export function Burst({ fire, className = "" }) {
         );
       })}
     </span>
+  );
+}
+
+// Pegatina pixel art de Isabel: aparece con un rebote, se balancea suave y se mueve al pasar el ratón.
+export function Sticker({ name, className = "", rotate = 0, delay = 0, bob = true }) {
+  const reduce = useReducedMotion();
+  const [width, height] = avatarSizes[name];
+  return (
+    <motion.div
+      aria-hidden="true"
+      className={className}
+      initial={reduce ? false : { opacity: 0, scale: 0.4, rotate: rotate - 12, y: 30 }}
+      whileInView={{ opacity: 1, scale: 1, rotate, y: 0 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ type: "spring", stiffness: 140, damping: 12, delay }}
+      whileHover={
+        reduce
+          ? undefined
+          : { rotate: [rotate, rotate - 7, rotate + 7, rotate - 4, rotate], scale: 1.06, transition: { duration: 0.6 } }
+      }
+    >
+      <motion.div
+        animate={reduce || !bob ? undefined : { y: [0, -8, 0] }}
+        transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut", delay }}
+      >
+        <Image
+          src={`/avatar/${name}.png`}
+          width={width}
+          height={height}
+          alt=""
+          unoptimized
+          draggable={false}
+          style={{ imageRendering: "pixelated" }}
+          className="h-auto w-full"
+        />
+      </motion.div>
+    </motion.div>
   );
 }

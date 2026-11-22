@@ -19,7 +19,7 @@ export default async function StudioPage({ params }) {
 
   return (
     <>
-      <PageHero title={s.title} bg="bg-pink/55" star="var(--color-sky)" sparkle="#ffffff" />
+      <PageHero title={s.title} bg="bg-pink/55" star="var(--color-sky)" sparkle="#ffffff" sticker="pantalla" />
 
       <section className="bg-sky/35 px-6 py-24">
         <div className="mx-auto max-w-4xl">

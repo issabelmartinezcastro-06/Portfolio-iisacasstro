@@ -65,13 +65,13 @@ export default async function ContactPage({ params }) {
 
   return (
     <>
-      <PageHero title={c.heading} bg="bg-sky/65" star="var(--color-pink)" sparkle="#ffffff">
+      <PageHero title={c.heading} bg="bg-sky/65" star="var(--color-pink)" sparkle="#ffffff" sticker="saludar">
         <FadeUp delay={0.6}>
           <p className="mt-8 max-w-xl text-xl font-medium text-ink/85">{c.intro}</p>
         </FadeUp>
       </PageHero>
 
-      <section className="relative mx-auto grid max-w-6xl gap-16 px-6 py-24 md:grid-cols-[1fr_1.15fr] md:gap-20">
+      <section className="relative mx-auto grid max-w-6xl grid-cols-[minmax(0,1fr)] gap-16 px-6 py-24 md:grid-cols-[1fr_1.15fr] md:gap-20">
         <Star
           className="absolute -top-6 right-6 size-12 md:right-1/2 md:size-16"
           color="var(--color-yellow)"

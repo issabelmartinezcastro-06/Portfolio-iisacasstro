@@ -37,20 +37,20 @@ function Field({ id, label, tone, textarea = false, ...props }) {
         name={id}
         required
         rows={textarea ? 5 : undefined}
-        className="mt-1 block w-full resize-none bg-transparent py-2 text-lg font-medium text-ink outline-none placeholder:text-ink/40"
+        className="mt-1 block w-full min-w-0 resize-none bg-transparent py-2 text-lg font-medium text-ink outline-none placeholder:text-ink/40"
         {...props}
       />
     </motion.div>
   );
 }
 
-// Formulario sin servidor: al enviar abre el correo del visitante con el mensaje ya escrito.
-// Los campos entran uno a uno y, al enviar, el avión de papel sale volando entre estrellas.
+// Con la clave de Web3Forms el mensaje llega directo a la bandeja; sin ella se abre el correo del visitante.
+// Al pulsar enviar, el avión de papel sale volando y estallan estrellas al instante, sin esperar a la red.
 export default function ContactForm({ email, text }) {
   const reduce = useReducedMotion();
-  const [sent, setSent] = useState(0);
+  const [presses, setPresses] = useState(0); // lanza el estallido en cada pulsación
+  const [flying, setFlying] = useState(false);
   const [status, setStatus] = useState("idle"); // idle | sending | done | error
-  // Con la clave de Web3Forms el mensaje llega directo a la bandeja; sin ella se abre el correo del visitante.
   const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_KEY;
 
   async function onSubmit(e) {
@@ -58,10 +58,12 @@ export default function ContactForm({ email, text }) {
     const form = e.currentTarget;
     const data = new FormData(form);
 
+    setPresses((n) => n + 1);
+    setFlying(true);
+
     if (!accessKey) {
       const body = `${data.get("message")}\n\n${data.get("name")}\n${data.get("from")}`;
       const url = `mailto:${email}?subject=${encodeURIComponent(data.get("subject"))}&body=${encodeURIComponent(body)}`;
-      setSent((n) => n + 1);
       setStatus("done");
       window.location.href = url;
       return;
@@ -83,11 +85,11 @@ export default function ContactForm({ email, text }) {
       });
       const json = await res.json();
       if (!json.success) throw new Error("rejected");
-      setSent((n) => n + 1);
       setStatus("done");
       form.reset();
     } catch {
       setStatus("error");
+      setFlying(false);
     }
   }
 
@@ -100,7 +102,9 @@ export default function ContactForm({ email, text }) {
           ? accessKey
             ? text.sentOk
             : text.done
-          : text.hint;
+          : accessKey
+            ? ""
+            : text.hint;
 
   return (
     <motion.form
@@ -113,7 +117,7 @@ export default function ContactForm({ email, text }) {
     >
       <PaperPlane
         color="#7c5ce0"
-        flying={sent > 0}
+        flying={flying}
         className="absolute -top-28 right-0 w-20 md:-top-32 md:w-24"
       />
       <Field id="name" tone="pink" label={text.name} autoComplete="name" />
@@ -123,32 +127,36 @@ export default function ContactForm({ email, text }) {
       <input type="checkbox" name="botcheck" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
 
       <motion.div variants={item} className="relative">
-        <button
+        <motion.button
           type="submit"
           disabled={status === "sending"}
-          className="group inline-flex disabled:opacity-60 items-center gap-2 text-2xl font-extrabold text-royal"
+          whileHover={reduce ? undefined : { y: -4, rotate: -1.5 }}
+          whileTap={reduce ? undefined : { scale: 0.93, rotate: 2 }}
+          className="group inline-flex items-center gap-3 rounded-full bg-royal px-8 py-4 text-xl font-extrabold text-white shadow-lg shadow-royal/30 disabled:opacity-60"
         >
-          <span className="underline decoration-pink decoration-4 underline-offset-8">{text.send}</span>
+          {text.send}
           <ArrowUpRight
-            className="size-7 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1"
+            className="size-6 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1"
             aria-hidden="true"
           />
-        </button>
-        <Burst fire={sent} className="left-24 top-3" />
+        </motion.button>
+        <Burst fire={presses} className="left-28 top-6" />
         <AnimatePresence mode="wait">
-          <motion.p
-            key={status}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            aria-live="polite"
-            className={`mt-4 text-sm font-semibold ${
-              status === "error" ? "text-[#e8508a]" : status === "done" ? "text-royal" : "text-ink/60"
-            }`}
-          >
-            {message}
-          </motion.p>
+          {message && (
+            <motion.p
+              key={status}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              aria-live="polite"
+              className={`mt-4 text-sm font-semibold ${
+                status === "error" ? "text-[#e8508a]" : status === "done" ? "text-royal" : "text-ink/60"
+              }`}
+            >
+              {message}
+            </motion.p>
+          )}
         </AnimatePresence>
       </motion.div>
     </motion.form>

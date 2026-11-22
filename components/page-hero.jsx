@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { DisplayTitle, Heart, Sparkle, Star } from "@/components/scrapbook";
+import { DisplayTitle, Heart, Sparkle, Star, Sticker } from "@/components/scrapbook";
 
 gsap.registerPlugin(useGSAP);
 
@@ -13,6 +13,7 @@ export default function PageHero({
   bg,
   star = "var(--color-pink)",
   sparkle = "var(--color-yellow)",
+  sticker,
   children,
 }) {
   const root = useRef(null);
@@ -43,6 +44,14 @@ export default function PageHero({
       <Sparkle className="float absolute bottom-14 right-[30%] size-7" color="#ffffff" />
       <Heart className="float absolute right-[22%] top-24 hidden size-10 md:block" color="#ffffff" />
       <Star className="float absolute bottom-6 right-[10%] hidden size-8 md:block" color="#ffffff" spin={false} />
+      {sticker && (
+        <Sticker
+          name={sticker}
+          bob={false}
+          delay={0.5}
+          className="absolute -bottom-1 right-[4%] z-10 w-24 sm:w-32 md:right-[9%] md:w-44"
+        />
+      )}
       <div className="relative mx-auto max-w-6xl">
         <DisplayTitle
           text={title}
