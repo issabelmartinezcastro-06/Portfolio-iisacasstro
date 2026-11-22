@@ -5,10 +5,12 @@ import { getDictionary, isLocale } from "@/lib/i18n";
 import Hero from "@/components/hero";
 import {
   FadeUp,
+  Heart,
   Marquee,
   Polaroid,
   SectionTitle,
   Sparkle,
+  Star,
 } from "@/components/scrapbook";
 
 const STL = "/proyectos/stl";
@@ -36,21 +38,26 @@ export default async function HomePage({ params }) {
         className="-rotate-1 bg-pink/45 py-5 font-display text-3xl text-royal md:text-5xl"
       />
 
-      <section className="relative mx-auto max-w-6xl px-6 py-28">
-        <Sparkle className="absolute right-10 top-16 size-10" color="var(--color-pink)" />
-        {t.home.roles.map((role, i) => (
-          <FadeUp key={role} delay={i * 0.12}>
-            <p
-              className={`font-display text-4xl leading-tight md:text-7xl ${
-                i % 2 === 0 ? "text-royal" : "text-pink md:ml-24"
-              }`}
-            >
-              {role}
-            </p>
-          </FadeUp>
-        ))}
+      <section className="relative overflow-hidden bg-sky/30">
+        <div className="relative mx-auto max-w-6xl px-6 py-28">
+          <Star className="absolute right-6 top-10 size-16 md:right-16 md:size-24" color="var(--color-pink)" />
+          <Heart className="absolute bottom-12 right-1/3 hidden size-10 md:block" color="#ffffff" />
+          <Sparkle className="absolute bottom-10 left-6 size-10" color="#ffffff" />
+          {t.home.roles.map((role, i) => (
+            <FadeUp key={role} delay={i * 0.12}>
+              <p
+                className={`font-display text-4xl leading-tight md:text-7xl ${
+                  i % 2 === 0 ? "text-royal" : "text-[#e8508a] md:ml-24"
+                }`}
+              >
+                {role}
+              </p>
+            </FadeUp>
+          ))}
+        </div>
       </section>
 
+      <div className="bg-pink/25">
       <section className="mx-auto grid max-w-6xl items-center gap-12 px-6 py-28 md:grid-cols-2">
         <div>
           <SectionTitle>{t.home.workTitle}</SectionTitle>
@@ -84,6 +91,7 @@ export default async function HomePage({ params }) {
           </div>
         </div>
       </section>
+      </div>
     </>
   );
 }

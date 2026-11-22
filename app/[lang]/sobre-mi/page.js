@@ -103,11 +103,15 @@ export default async function AboutPage({ params }) {
                 <p className="text-xs font-extrabold uppercase tracking-widest text-royal">
                   {group.label}
                 </p>
-                <p className="mt-2 font-display text-3xl leading-snug text-ink md:text-4xl">
+                <p className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 font-display text-2xl leading-snug text-ink sm:text-3xl md:text-4xl">
                   {group.items.map((tool, n) => (
-                    <span key={tool}>
-                      {n > 0 && <span className="mx-3 text-pink">✦</span>}
+                    <span key={tool} className="flex items-center gap-3">
                       {tool}
+                      {n < group.items.length - 1 && (
+                        <span aria-hidden="true" className="text-pink">
+                          ✦
+                        </span>
+                      )}
                     </span>
                   ))}
                 </p>

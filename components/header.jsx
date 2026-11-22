@@ -12,7 +12,7 @@ export default function Header({ lang, nav }) {
   ];
 
   return (
-    <header className="sticky top-0 z-20 flex flex-wrap items-center justify-between gap-x-4 bg-background/70 px-6 py-1.5 backdrop-blur-md">
+    <header className="sticky top-0 z-20 flex flex-wrap items-center justify-between gap-x-4 bg-[#fff0a6] px-6 py-1.5">
       <Link href={`/${lang}`} aria-label="Isabel" className="block">
         <Image
           src="/logo/isabel-logo.webp"
