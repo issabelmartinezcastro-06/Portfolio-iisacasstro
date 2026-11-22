@@ -49,15 +49,58 @@ function Field({ id, label, tone, textarea = false, ...props }) {
 export default function ContactForm({ email, text }) {
   const reduce = useReducedMotion();
   const [sent, setSent] = useState(0);
+  const [status, setStatus] = useState("idle"); // idle | sending | done | error
+  // Con la clave de Web3Forms el mensaje llega directo a la bandeja; sin ella se abre el correo del visitante.
+  const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_KEY;
 
-  function onSubmit(e) {
+  async function onSubmit(e) {
     e.preventDefault();
-    const data = new FormData(e.currentTarget);
-    const body = `${data.get("message")}\n\n${data.get("name")}\n${data.get("from")}`;
-    const url = `mailto:${email}?subject=${encodeURIComponent(data.get("subject"))}&body=${encodeURIComponent(body)}`;
-    setSent((n) => n + 1);
-    window.location.href = url;
+    const form = e.currentTarget;
+    const data = new FormData(form);
+
+    if (!accessKey) {
+      const body = `${data.get("message")}\n\n${data.get("name")}\n${data.get("from")}`;
+      const url = `mailto:${email}?subject=${encodeURIComponent(data.get("subject"))}&body=${encodeURIComponent(body)}`;
+      setSent((n) => n + 1);
+      setStatus("done");
+      window.location.href = url;
+      return;
+    }
+
+    setStatus("sending");
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          access_key: accessKey,
+          name: data.get("name"),
+          email: data.get("from"),
+          subject: data.get("subject"),
+          message: data.get("message"),
+          botcheck: data.get("botcheck") || "",
+        }),
+      });
+      const json = await res.json();
+      if (!json.success) throw new Error("rejected");
+      setSent((n) => n + 1);
+      setStatus("done");
+      form.reset();
+    } catch {
+      setStatus("error");
+    }
   }
+
+  const message =
+    status === "sending"
+      ? text.sending
+      : status === "error"
+        ? text.error
+        : status === "done"
+          ? accessKey
+            ? text.sentOk
+            : text.done
+          : text.hint;
 
   return (
     <motion.form
@@ -77,11 +120,13 @@ export default function ContactForm({ email, text }) {
       <Field id="from" tone="sky" label={text.email} type="email" autoComplete="email" />
       <Field id="subject" tone="yellow" label={text.subject} />
       <Field id="message" tone="mint" label={text.message} textarea />
+      <input type="checkbox" name="botcheck" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
 
       <motion.div variants={item} className="relative">
         <button
           type="submit"
-          className="group inline-flex items-center gap-2 text-2xl font-extrabold text-royal"
+          disabled={status === "sending"}
+          className="group inline-flex disabled:opacity-60 items-center gap-2 text-2xl font-extrabold text-royal"
         >
           <span className="underline decoration-pink decoration-4 underline-offset-8">{text.send}</span>
           <ArrowUpRight
@@ -92,15 +137,17 @@ export default function ContactForm({ email, text }) {
         <Burst fire={sent} className="left-24 top-3" />
         <AnimatePresence mode="wait">
           <motion.p
-            key={sent ? "done" : "hint"}
+            key={status}
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
             aria-live="polite"
-            className={`mt-4 text-sm font-semibold ${sent ? "text-royal" : "text-ink/60"}`}
+            className={`mt-4 text-sm font-semibold ${
+              status === "error" ? "text-[#e8508a]" : status === "done" ? "text-royal" : "text-ink/60"
+            }`}
           >
-            {sent ? text.done : text.hint}
+            {message}
           </motion.p>
         </AnimatePresence>
       </motion.div>
