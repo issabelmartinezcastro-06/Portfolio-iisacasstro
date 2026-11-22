@@ -40,19 +40,21 @@ export default async function StudioPage({ params }) {
                   {project.title}
                 </h3>
                 <p className="mt-4 text-lg font-medium text-ink/80">{project.intro}</p>
-                <ul className="mt-4 grid gap-2 text-lg text-ink">
-                  {project.items.map((item) => (
-                    <li key={item} className="flex items-center gap-3">
-                      <span aria-hidden="true" className="text-royal">
-                        ✦
-                      </span>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-                {i === 0 && (
-                  <Arrow className="absolute right-6 top-12 hidden w-24 rotate-12 md:block" />
-                )}
+                <div className="mt-4 flex items-start gap-6">
+                  <ul className="grid gap-2 text-lg text-ink">
+                    {project.items.map((item) => (
+                      <li key={item} className="flex items-center gap-3">
+                        <span aria-hidden="true" className="text-royal">
+                          ✦
+                        </span>
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                  {i === 0 && (
+                    <Arrow className="mt-2 hidden h-16 w-24 -scale-x-100 md:block" />
+                  )}
+                </div>
               </FadeUp>
             </li>
           ))}
