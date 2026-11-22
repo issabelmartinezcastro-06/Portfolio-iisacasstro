@@ -2,25 +2,26 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Languages } from "lucide-react";
 import { locales } from "@/lib/i18n";
 
+// Selector de idioma en texto, sin botones: el activo va en azul y subrayado.
 export default function LanguageSwitcher({ lang }) {
   const pathname = usePathname();
   const rest = pathname.split("/").slice(2).join("/");
 
   return (
-    <div className="flex items-center gap-1 rounded-full bg-ink/5 p-1">
-      <Languages className="ml-2 size-4" aria-hidden="true" />
+    <div className="flex items-center gap-3 text-sm font-extrabold uppercase">
       {locales.map((l) => (
         <Link
           key={l}
           href={`/${l}${rest ? `/${rest}` : ""}`}
           hrefLang={l}
           aria-current={l === lang ? "true" : undefined}
-          className={`rounded-full px-3 py-1 text-xs font-bold uppercase transition-colors ${
-            l === lang ? "bg-ink text-background" : "hover:bg-ink/10"
-          }`}
+          className={
+            l === lang
+              ? "text-royal underline decoration-pink decoration-4 underline-offset-8"
+              : "text-ink/55 transition-colors hover:text-royal"
+          }
         >
           {l}
         </Link>

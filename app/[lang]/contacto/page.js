@@ -1,8 +1,8 @@
 import { notFound } from "next/navigation";
-import { ArrowUpRight } from "lucide-react";
 import { getDictionary, isLocale, pageMetadata } from "@/lib/i18n";
 import { contact } from "@/lib/site";
-import { FadeUp, Marquee } from "@/components/scrapbook";
+import { Arrow, FadeUp, Marquee, Star } from "@/components/scrapbook";
+import ContactForm from "@/components/contact-form";
 import PageHero from "@/components/page-hero";
 
 export async function generateMetadata({ params }) {
@@ -12,36 +12,47 @@ export async function generateMetadata({ params }) {
   return pageMetadata(lang, "/contacto", t.nav.contact, t.contact.description);
 }
 
-// Fila de contacto de lado a lado: se llena de color al pasar el ratón.
-function ContactRow({ label, value, href, band, sweep, external = false }) {
-  return (
-    <FadeUp>
-      <a
-        href={href}
-        {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-        className={`group relative isolate block overflow-hidden ${band}`}
-      >
-        <span
-          aria-hidden="true"
-          className={`absolute inset-0 -z-10 origin-left scale-x-0 transition-transform duration-500 ease-out group-hover:scale-x-100 ${sweep}`}
-        />
-        <span className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-6 py-10 md:py-14">
-          <span className="min-w-0">
-            <span className="block text-xs font-extrabold uppercase tracking-widest text-royal">
-              {label}
-            </span>
-            <span className="mt-2 block break-words font-display text-xl leading-tight text-ink sm:text-3xl md:text-5xl">
-              {value}
-            </span>
-          </span>
-          <span className="grid size-12 shrink-0 place-items-center rounded-full bg-ink text-background transition-transform duration-300 group-hover:rotate-12 md:size-16">
-            <ArrowUpRight
-              className="size-6 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 md:size-8"
-              aria-hidden="true"
-            />
-          </span>
+// Línea de contacto: etiqueta, dato en letra gorda y una flecha dibujada que se mueve al pasar el ratón.
+// Colores de cada línea: barrido al pasar el ratón y flecha dibujada.
+const lineTones = [
+  { sweep: "bg-pink/30", arrow: "#e8508a" },
+  { sweep: "bg-sky/50", arrow: "#3d8fd1" },
+  { sweep: "bg-mint/50", arrow: "#2fae80" },
+];
+
+function ContactLine({ label, value, href, external = false, index = 0 }) {
+  const tone = lineTones[index % lineTones.length];
+  const inner = (
+    <>
+      <span
+        aria-hidden="true"
+        className={`absolute inset-y-0 -inset-x-4 -z-10 origin-left scale-x-0 rounded-2xl transition-transform duration-500 ease-out group-hover:scale-x-100 ${tone.sweep}`}
+      />
+      <span className="min-w-0">
+        <span className="block text-xs font-extrabold uppercase tracking-widest text-royal">{label}</span>
+        <span className="mt-1 block break-words font-display text-2xl leading-tight text-ink transition-transform duration-300 group-hover:translate-x-2 sm:text-3xl">
+          {value}
         </span>
-      </a>
+      </span>
+      {href && (
+        <Arrow color={tone.arrow} className="hidden w-14 shrink-0 -rotate-12 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-2 sm:block" />
+      )}
+    </>
+  );
+  const cls = "group relative isolate flex items-center justify-between gap-6 py-7";
+  return (
+    <FadeUp delay={0.15 + index * 0.12}>
+      {href ? (
+        <a
+          href={href}
+          {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+          className={cls}
+        >
+          {inner}
+        </a>
+      ) : (
+        <div className={cls}>{inner}</div>
+      )}
     </FadeUp>
   );
 }
@@ -54,38 +65,42 @@ export default async function ContactPage({ params }) {
 
   return (
     <>
-      <PageHero title={c.heading} bg="bg-violet/60" star="var(--color-yellow)" sparkle="var(--color-pink)">
+      <PageHero title={c.heading} bg="bg-sky/65" star="var(--color-pink)" sparkle="#ffffff">
         <FadeUp delay={0.6}>
-          <p className="mt-8 max-w-xl text-xl font-medium text-ink/85">{c.text}</p>
+          <p className="mt-8 max-w-xl text-xl font-medium text-ink/85">{c.intro}</p>
         </FadeUp>
       </PageHero>
 
-      <div>
-        <ContactRow
-          label={c.email}
-          value={contact.email}
-          href={`mailto:${contact.email}`}
-          band="bg-sky/40"
-          sweep="bg-pink/40"
+      <section className="relative mx-auto grid max-w-6xl gap-16 px-6 py-24 md:grid-cols-[1fr_1.15fr] md:gap-20">
+        <Star
+          className="absolute -top-6 right-6 size-12 md:right-1/2 md:size-16"
+          color="var(--color-yellow)"
         />
-        <ContactRow
-          label={c.linkedin}
-          value="isabel-martinez-castro"
-          href={contact.linkedin}
-          band="bg-yellow/40"
-          sweep="bg-mint/60"
-          external
-        />
-        <FadeUp>
-          <p className="mx-auto max-w-6xl bg-mint/40 px-6 py-8 text-lg font-bold text-ink/70">
-            {c.upwork}
-          </p>
+        <div>
+          <div className="divide-y-2 divide-dashed divide-ink/20">
+            <ContactLine label={c.email} value={contact.email} href={`mailto:${contact.email}`} index={0} />
+            <ContactLine
+              label={c.linkedin}
+              value="isabel-martinez-castro"
+              href={contact.linkedin}
+              external
+              index={1}
+            />
+            <ContactLine label="Upwork" value={c.upwork.replace("Upwork: ", "")} index={2} />
+          </div>
+        </div>
+
+        <FadeUp delay={0.15}>
+          <h2 className="font-display text-4xl leading-none text-royal md:text-5xl">{c.form.title}</h2>
+          <div className="mt-10">
+            <ContactForm email={contact.email} text={c.form} />
+          </div>
         </FadeUp>
-      </div>
+      </section>
 
       <Marquee
         items={words}
-        className="-rotate-1 bg-ink py-5 font-display text-3xl text-background md:text-5xl"
+        className="-rotate-1 bg-pink/45 py-5 font-display text-3xl text-royal md:text-5xl"
       />
       <div className="h-16" />
     </>

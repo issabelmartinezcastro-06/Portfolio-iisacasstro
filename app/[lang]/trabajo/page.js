@@ -16,18 +16,26 @@ export default async function WorkPage({ params }) {
   if (!isLocale(lang)) notFound();
   const t = getDictionary(lang);
   const stl = getProject("stl");
+  const live = stl.links[0];
 
-  // El primer elemento es STL: enlaza a su caso de estudio y lleva su miniatura.
+  // El primer elemento es STL: lleva su miniatura y enlaza a la web en vivo y a su caso de estudio.
   const items = t.work.items.map((item, i) =>
     i === 0
-      ? { ...item, href: `/${lang}/modulos/${stl.slug}`, thumbnail: stl.thumbnail }
+      ? {
+          ...item,
+          thumbnail: stl.thumbnail,
+          links: [
+            { label: t.work.view, href: `/${lang}/modulos/${stl.slug}` },
+            { label: live.label[lang], href: live.href, external: true },
+          ],
+        }
       : item,
   );
 
   return (
     <>
-      <PageHero title={t.work.title} bg="bg-mint/70" star="var(--color-yellow)" sparkle="var(--color-pink)" />
-      <WorkList items={items} linkLabel={t.work.view} />
+      <PageHero title={t.work.title} bg="bg-pink/55" star="var(--color-sky)" sparkle="#ffffff" />
+      <WorkList items={items} filters={t.work.filters} />
     </>
   );
 }

@@ -29,6 +29,7 @@ export async function generateMetadata({ params }) {
   if (!isLocale(lang)) return {};
   const t = getDictionary(lang);
   return {
+    metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://portfolioiisacasstro.vercel.app"),
     title: t.meta.title,
     description: t.meta.description,
     alternates: {

@@ -56,6 +56,21 @@ export function Sparkle({ className = "", color = "var(--color-yellow)" }) {
   );
 }
 
+// Corazón garabateado.
+export function Heart({ className = "", color = "var(--color-pink)" }) {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 100 90" className={className}>
+      <path
+        d="M50 82 C 14 56, 6 34, 20 18 C 32 6, 46 14, 50 28 C 54 14, 68 6, 80 18 C 94 34, 86 56, 50 82 Z"
+        fill={color}
+        stroke={color}
+        strokeWidth="6"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 // Flecha dibujada a mano que se traza al entrar en pantalla.
 export function Arrow({ className = "", color = "var(--color-royal)" }) {
   const reduce = useReducedMotion();
@@ -295,14 +310,104 @@ export function DisplayTitle({ text, className = "", as: Tag = "h1" }) {
   );
 }
 
-// Título de sección con una estrella al lado.
+// Subrayado ondulado dibujado a mano que se traza al entrar en pantalla.
+export function Squiggle({ className = "", color = "var(--color-pink)" }) {
+  const reduce = useReducedMotion();
+  return (
+    <svg aria-hidden="true" viewBox="0 0 200 16" fill="none" className={className} preserveAspectRatio="none">
+      <motion.path
+        d="M4 9 C 20 1, 28 15, 44 8 S 68 1, 84 8 S 108 15, 124 8 S 148 1, 164 8 S 188 14, 196 7"
+        stroke={color}
+        strokeWidth="5"
+        strokeLinecap="round"
+        initial={reduce ? false : { pathLength: 0 }}
+        whileInView={{ pathLength: 1 }}
+        viewport={{ once: true, margin: "-40px" }}
+        transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
+      />
+    </svg>
+  );
+}
+
+// Título de sección con una estrella al lado y un subrayado dibujado a mano.
 export function SectionTitle({ children, id, className = "" }) {
   return (
     <FadeUp className={`relative inline-block ${className}`}>
       <h2 id={id} className="font-display text-5xl leading-none text-royal md:text-7xl">
         {children}
       </h2>
+      <Squiggle className="mt-2 h-3 w-2/3 md:h-4" />
       <Star className="absolute -right-4 -top-8 size-10 md:-right-16 md:-top-6 md:size-16" />
     </FadeUp>
+  );
+}
+
+// Avión de papel: flota suave y, cuando `flying` es verdadero, sale volando.
+export function PaperPlane({ className = "", flying = false, color = "var(--color-royal)" }) {
+  const reduce = useReducedMotion();
+  return (
+    <motion.svg
+      aria-hidden="true"
+      viewBox="0 0 120 100"
+      fill="none"
+      className={className}
+      animate={
+        flying
+          ? { x: 420, y: -260, rotate: 18, opacity: 0, transition: { duration: 1.1, ease: "easeIn" } }
+          : reduce
+            ? { x: 0, y: 0, rotate: 0, opacity: 1 }
+            : { x: 0, y: [0, -12, 0], rotate: [-4, 4, -4], opacity: 1, transition: { duration: 4, repeat: Infinity, ease: "easeInOut" } }
+      }
+    >
+      <path
+        d="M8 46 L112 8 L74 92 L56 58 Z"
+        stroke={color}
+        strokeWidth="5"
+        strokeLinejoin="round"
+        fill="#ffffff"
+      />
+      <path d="M56 58 L112 8" stroke={color} strokeWidth="5" strokeLinecap="round" />
+      <path d="M56 58 L52 82 L66 68" stroke={color} strokeWidth="5" strokeLinejoin="round" strokeLinecap="round" />
+    </motion.svg>
+  );
+}
+
+// Estallido de estrellas y corazones desde un punto. Cambia `fire` para lanzarlo de nuevo.
+export function Burst({ fire, className = "" }) {
+  const reduce = useReducedMotion();
+  if (!fire || reduce) return null;
+  const colors = [
+    "var(--color-pink)",
+    "var(--color-yellow)",
+    "var(--color-sky)",
+    "var(--color-violet)",
+    "var(--color-mint)",
+  ];
+  const count = 14;
+  return (
+    <span aria-hidden="true" className={`pointer-events-none absolute ${className}`} key={fire}>
+      {Array.from({ length: count }, (_, i) => {
+        const angle = (i / count) * Math.PI * 2;
+        const radius = 70 + ((i * 37) % 60);
+        const Shape = i % 3 === 0 ? Heart : Star;
+        return (
+          <motion.span
+            key={i}
+            className="absolute left-0 top-0 block size-6"
+            initial={{ x: 0, y: 0, scale: 0, rotate: 0, opacity: 1 }}
+            animate={{
+              x: Math.cos(angle) * radius,
+              y: Math.sin(angle) * radius - 20,
+              scale: [0, 1.2, 0.8],
+              rotate: i % 2 ? 180 : -180,
+              opacity: [1, 1, 0],
+            }}
+            transition={{ duration: 1.1, ease: "easeOut" }}
+          >
+            <Shape className="size-full" color={colors[i % colors.length]} spin={false} />
+          </motion.span>
+        );
+      })}
+    </span>
   );
 }

@@ -101,9 +101,15 @@ export default function CaseStudy({ lang, project, content, backLabel, stackLabe
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-9 inline-flex rotate-1 items-center gap-2 rounded-full bg-ink px-7 py-3.5 font-extrabold text-background shadow-lg shadow-ink/30 transition-transform hover:-translate-y-1 hover:-rotate-2"
+                  className="group mt-9 inline-flex items-center gap-2 text-xl font-extrabold text-royal"
                 >
-                  {link.label[lang]} <ArrowUpRight className="size-5" aria-hidden="true" />
+                  <span className="underline decoration-pink decoration-4 underline-offset-8">
+                    {link.label[lang]}
+                  </span>
+                  <ArrowUpRight
+                    className="size-6 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1"
+                    aria-hidden="true"
+                  />
                 </a>
               )}
             </div>
@@ -125,7 +131,7 @@ export default function CaseStudy({ lang, project, content, backLabel, stackLabe
 
       <Marquee
         items={project.stack}
-        className="bg-ink py-5 font-display text-3xl text-background md:text-4xl"
+        className="-rotate-1 bg-pink/45 py-5 font-display text-3xl text-royal md:text-4xl"
       />
 
       {/* Resumen */}
@@ -227,7 +233,7 @@ export default function CaseStudy({ lang, project, content, backLabel, stackLabe
       </section>
 
       {/* Resultado */}
-      <section className="bg-yellow/60 px-6 py-24">
+      <section className="bg-pink/25 px-6 py-24">
         <div className="mx-auto max-w-6xl">
           <SectionTitle>{study.outcome.title}</SectionTitle>
           <ul className="mt-14 grid grid-cols-2 gap-x-6 gap-y-12 md:grid-cols-4">
@@ -247,16 +253,16 @@ export default function CaseStudy({ lang, project, content, backLabel, stackLabe
       </section>
 
       {/* Cierre */}
-      <section className="bg-ink px-6 py-24 text-background">
+      <section className="bg-sky/40 px-6 py-24">
         <div className="mx-auto max-w-6xl">
           <FadeUp>
             <span className="inline-block rotate-2 rounded-full bg-mint px-4 py-1 text-sm font-extrabold text-ink">
               {study.role.title}
             </span>
-            <p className="mt-4 max-w-2xl text-xl text-background/85">{study.role.text}</p>
+            <p className="mt-4 max-w-2xl text-xl text-ink/85">{study.role.text}</p>
           </FadeUp>
 
-          <h2 className="mt-20 font-display text-5xl text-pink md:text-6xl">{study.takeaways.title}</h2>
+          <h2 className="mt-20 font-display text-5xl text-royal md:text-6xl">{study.takeaways.title}</h2>
           <ul className="mt-10 space-y-8">
             {study.takeaways.items.map((t, i) => (
               <li key={t}>
@@ -266,7 +272,7 @@ export default function CaseStudy({ lang, project, content, backLabel, stackLabe
               </li>
             ))}
           </ul>
-          <p className="mt-12 max-w-2xl border-t-2 border-dashed border-background/30 pt-6 text-background/70">
+          <p className="mt-12 max-w-2xl border-t-2 border-dashed border-ink/25 pt-6 text-ink/70">
             {study.takeaways.next}
           </p>
           {link && (
@@ -274,9 +280,15 @@ export default function CaseStudy({ lang, project, content, backLabel, stackLabe
               href={link.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-10 inline-flex -rotate-1 items-center gap-2 rounded-full bg-pink px-8 py-4 text-lg font-extrabold text-ink transition-transform hover:-translate-y-1 hover:rotate-1"
+              className="group mt-10 inline-flex items-center gap-2 text-2xl font-extrabold text-royal"
             >
-              {link.label[lang]} <ArrowUpRight className="size-5" aria-hidden="true" />
+              <span className="underline decoration-pink decoration-4 underline-offset-8">
+                {link.label[lang]}
+              </span>
+              <ArrowUpRight
+                className="size-7 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1"
+                aria-hidden="true"
+              />
             </a>
           )}
         </div>

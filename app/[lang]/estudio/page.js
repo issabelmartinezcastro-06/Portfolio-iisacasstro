@@ -3,7 +3,7 @@ import { getDictionary, isLocale, pageMetadata } from "@/lib/i18n";
 import { Arrow, FadeUp, ScrollText, SectionTitle, Sparkle } from "@/components/scrapbook";
 import PageHero from "@/components/page-hero";
 
-const bands = ["bg-mint/50", "bg-pink/40"];
+const bands = ["bg-sky/30", "bg-pink/25"];
 
 export async function generateMetadata({ params }) {
   const { lang } = await params;
@@ -19,11 +19,11 @@ export default async function StudioPage({ params }) {
 
   return (
     <>
-      <PageHero title={s.title} bg="bg-yellow/70" star="var(--color-pink)" sparkle="var(--color-sky)" />
+      <PageHero title={s.title} bg="bg-pink/55" star="var(--color-sky)" sparkle="#ffffff" />
 
-      <section className="bg-royal px-6 py-24 text-white">
+      <section className="bg-sky/35 px-6 py-24">
         <div className="mx-auto max-w-4xl">
-          <ScrollText text={s.statement} className="text-3xl font-bold leading-snug md:text-5xl" />
+          <ScrollText text={s.statement} className="text-3xl font-bold leading-snug text-ink md:text-5xl" />
         </div>
       </section>
 

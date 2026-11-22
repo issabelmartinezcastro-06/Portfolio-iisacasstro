@@ -4,7 +4,7 @@ import { FadeUp, ScrollText, SectionTitle, Sparkle } from "@/components/scrapboo
 import PageHero from "@/components/page-hero";
 
 // Colores del barrido que aparece al pasar el ratón por cada función.
-const sweeps = ["bg-pink/30", "bg-sky/40", "bg-yellow/50", "bg-mint/50", "bg-violet/30", "bg-orange/60"];
+const sweeps = ["bg-pink/30", "bg-sky/40"];
 
 export async function generateMetadata({ params }) {
   const { lang } = await params;
@@ -20,7 +20,7 @@ export default async function AboutPage({ params }) {
 
   return (
     <>
-      <PageHero title={a.title} bg="bg-pink/60" star="var(--color-yellow)" sparkle="var(--color-sky)">
+      <PageHero title={a.title} bg="bg-sky/65" star="var(--color-pink)" sparkle="#ffffff">
         <div className="mt-12 space-y-8">
           {a.roles.map((role, i) => (
             <FadeUp key={role.name} delay={0.5 + i * 0.12}>
@@ -31,7 +31,7 @@ export default async function AboutPage({ params }) {
         </div>
       </PageHero>
 
-      <section className="bg-yellow/40 px-6 py-24">
+      <section className="bg-pink/25 px-6 py-24">
         <div className="mx-auto max-w-4xl space-y-14">
           {a.bio.map((paragraph) => (
             <ScrollText
@@ -92,18 +92,18 @@ export default async function AboutPage({ params }) {
         </ul>
       </section>
 
-      <section className="bg-royal px-6 py-24 text-white">
+      <section className="bg-sky/30 px-6 py-24">
         <div className="mx-auto max-w-5xl">
           <FadeUp>
-            <h2 className="font-display text-5xl leading-none md:text-7xl">{a.techTitle}</h2>
+            <h2 className="font-display text-5xl leading-none text-royal md:text-7xl">{a.techTitle}</h2>
           </FadeUp>
           <div className="mt-16 space-y-10">
             {a.tech.map((group, i) => (
               <FadeUp key={group.label} delay={i * 0.06}>
-                <p className="text-xs font-extrabold uppercase tracking-widest text-yellow">
+                <p className="text-xs font-extrabold uppercase tracking-widest text-royal">
                   {group.label}
                 </p>
-                <p className="mt-2 font-display text-3xl leading-snug md:text-4xl">
+                <p className="mt-2 font-display text-3xl leading-snug text-ink md:text-4xl">
                   {group.items.map((tool, n) => (
                     <span key={tool}>
                       {n > 0 && <span className="mx-3 text-pink">✦</span>}

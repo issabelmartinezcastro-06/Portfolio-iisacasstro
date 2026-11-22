@@ -4,14 +4,11 @@ import { ArrowUpRight } from "lucide-react";
 import { getDictionary, isLocale } from "@/lib/i18n";
 import Hero from "@/components/hero";
 import {
-  CountUp,
   FadeUp,
   Marquee,
-  Parallax,
   Polaroid,
   SectionTitle,
   Sparkle,
-  Star,
 } from "@/components/scrapbook";
 
 const STL = "/proyectos/stl";
@@ -36,7 +33,7 @@ export default async function HomePage({ params }) {
 
       <Marquee
         items={t.home.marquee}
-        className="-rotate-1 bg-ink py-5 font-display text-3xl text-background md:text-5xl"
+        className="-rotate-1 bg-pink/45 py-5 font-display text-3xl text-royal md:text-5xl"
       />
 
       <section className="relative mx-auto max-w-6xl px-6 py-28">
@@ -52,19 +49,6 @@ export default async function HomePage({ params }) {
             </p>
           </FadeUp>
         ))}
-      </section>
-
-      <section className="relative mx-auto max-w-6xl px-6 py-16 text-center">
-        <Star className="absolute left-4 top-10 size-14 md:left-24 md:size-24" color="var(--color-yellow)" />
-        <Parallax distance={24}>
-          <p className="font-display text-[6.5rem] leading-none text-pink md:text-[13rem]">
-            <CountUp to={t.home.stat.value} separator={t.home.stat.separator} />
-          </p>
-        </Parallax>
-        <FadeUp>
-          <p className="mt-4 font-display text-2xl text-royal md:text-4xl">{t.home.stat.label}</p>
-          <p className="mt-2 text-lg font-medium text-ink/70">{t.home.stat.note}</p>
-        </FadeUp>
       </section>
 
       <section className="mx-auto grid max-w-6xl items-center gap-12 px-6 py-28 md:grid-cols-2">
