@@ -168,7 +168,7 @@ export default function CaseStudy({ lang, project, content, backLabel, stackLabe
 
       {/* Lo que más cuidé */}
       <section className="relative mx-auto max-w-6xl px-6 pb-16">
-        <Sticker name="lupa" rotate={6} className="absolute right-6 top-0 hidden w-24 md:block md:w-28" />
+        <Sticker name="lupa" rotate={6} className="absolute right-6 top-28 w-20 min-[360px]:top-16 sm:top-12 sm:w-24 md:top-0 md:w-28" />
         <SectionTitle>{study.labels.highlights}</SectionTitle>
         <div className="mt-6 divide-y-2 divide-dashed divide-ink/15">
           {study.highlights.map((item, i) => (

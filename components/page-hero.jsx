@@ -37,7 +37,9 @@ export default function PageHero({
   return (
     <section
       ref={root}
-      className={`relative isolate overflow-hidden px-6 pb-16 pt-14 md:pb-24 md:pt-20 ${bg}`}
+      className={`relative isolate overflow-hidden px-6 pt-14 md:pt-20 ${
+        sticker ? "pb-44 lg:pb-24" : "pb-16 md:pb-24"
+      } ${bg}`}
     >
       <Star className="float absolute right-[8%] top-10 size-16 md:size-28" color={star} />
       <Sparkle className="float absolute bottom-10 left-[6%] size-10" color={sparkle} />
@@ -49,13 +51,13 @@ export default function PageHero({
           name={sticker}
           bob={false}
           delay={0.5}
-          className="absolute -bottom-1 right-[4%] z-10 w-24 sm:w-32 md:right-[9%] md:w-44"
+          className="absolute -bottom-1 right-[4%] z-10 w-24 sm:w-32 lg:right-[9%] lg:w-44"
         />
       )}
       <div className="relative mx-auto max-w-6xl">
         <DisplayTitle
           text={title}
-          className="text-sticker font-display text-6xl leading-[0.98] text-white sm:text-7xl md:text-[8rem]"
+          className="text-sticker font-display text-[2.9rem] leading-[0.98] text-white min-[400px]:text-6xl sm:text-7xl md:text-[8rem]"
         />
         {children}
       </div>

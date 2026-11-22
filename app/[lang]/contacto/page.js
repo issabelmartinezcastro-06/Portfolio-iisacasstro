@@ -31,7 +31,16 @@ function ContactLine({ label, value, href, external = false, index = 0 }) {
       <span className="min-w-0">
         <span className="block text-xs font-extrabold uppercase tracking-widest text-royal">{label}</span>
         <span className="mt-1 block break-words font-display text-2xl leading-tight text-ink transition-transform duration-300 group-hover:translate-x-2 sm:text-3xl">
-          {value}
+          {value.split("@").map((part, n) => (
+            <span key={n}>
+              {n > 0 && (
+                <>
+                  @<wbr />
+                </>
+              )}
+              {part}
+            </span>
+          ))}
         </span>
       </span>
       {href && (
